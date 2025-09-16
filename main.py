@@ -1,11 +1,15 @@
 import subprocess
+from rich import print
+from rich.console import Console
 
-print("pipLinux v1.0")
+console = Console()
+
+print("[bold magenta]pipLinux v1.0[/bold magenta]")
 while True:
-    packageName = input("Enter python library/package name:")
+    packageName = console.input("[bold cyan]Enter python library/package name: [/bold cyan]")
     codeDown = 1
     try:
-        print(f"Downloading library/package {packageName} has started")
+        print(f"[bold yellow]Downloading library/package {packageName} has started[/bold yellow]")
         result = subprocess.run(
             ["sudo", "apt", "install", f"python3-{packageName}"],
             check=False,
@@ -16,20 +20,20 @@ while True:
         if result.returncode == 0:
             codeDown = 0
         else:
-            print(f"Error downloading: {result.stderr}")
+            print(f"[bold red]Error downloading: {result.stderr}[/bold red]")
     except Exception as e:
         print(f"Error downloading: {e}")
     finally:
         if codeDown == 0:
-            print(f"library/package {packageName} installed successfully")
+            print(f"[bold green]library/package {packageName} installed successfully[/bold green]")
         else:
-            print(f"library/package {packageName} not installed")
+            print(f"[bold red]library/package {packageName} not installed[/bold red]")
         while True:
-            again = input("Do you want to download another library/package? (y/n): ").strip().lower()
+            again = console.input("[bold cyan]Do you want to download another library/package? (y/n): [/bold cyan]").strip().lower()
             if again == 'y':
                 break
             elif again == 'n':
-                print("Exiting pipLinux")
+                print("[bold magenta]Exiting pipLinux[/bold cyan]")
                 exit()
             else:
-                print("Invalid input. Please enter 'y' or 'n'.")
+                print("[bold red]Invalid input[/bold red]. [bold cyan]Please enter 'y' or 'n'.[/bold cyan]")
